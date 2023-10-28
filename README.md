@@ -1,10 +1,9 @@
-# r3f-vite-starter
-A boilerplate to build R3F projects
+# My Portfolio Website
 
-```
-yarn
-yarn dev
-```
+## Create empty React project
 
+## Install Required Dependencies
+`yarn add three @types/three @react-three/fiber @react-three/drei leva`
 
-![image](https://user-images.githubusercontent.com/6551176/221732091-23ee52cb-4150-42fa-b998-43628d7a6b0d.png)
+## Run app in dev mod
+`yarn dev`
