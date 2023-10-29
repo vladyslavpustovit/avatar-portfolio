@@ -17,24 +17,29 @@ export function Avatar(props) {
         cursorFollow: false,
         wireframe: false
     })
-    const group = useRef();
+    // Group reference
+    const group = useRef()
+
+    // Retrieve Nodes & Materials from the loaded model
     const { nodes, materials } = useGLTF("models/avatar.glb");
 
     const { animations: typingAnimation } = useFBX("animations/Typing.fbx");
     const { animations: standingAnimation } = useFBX("animations/Standing.fbx");
     const { animations: wavingAnimation } = useFBX("animations/Waving.fbx");
 
-
+    // Rename animations
     typingAnimation[0].name = 'Typing';
     standingAnimation[0].name = 'Standing';
     wavingAnimation[0].name = 'Waving';
 
+    // Use animations
     const { actions } = useAnimations([
         typingAnimation[0],
         standingAnimation[0],
         wavingAnimation[0]],
         group);
 
+    // Follow user actions
     useFrame((state) => {
         if (headFollow) {
             group.current.getObjectByName('Head').lookAt(state.camera.position)
@@ -45,18 +50,21 @@ export function Avatar(props) {
         }
     })
 
+    // Play animation
     useEffect(() => {
         actions[animation].reset().fadeIn(0.5).play();
         return () => {
-            actions[animation].reset().fadeOut(0.5);
+            actions[animation].reset().fadeOut(1);
         }
     }, [animation]);
 
+    // Set material to wireframe
     useEffect(() => {
         Object.values(materials).forEach((material)=>{
             material.wireframe = wireframe;
         })
     }, [wireframe]);
+
     return (
         <group {...props} ref={group} dispose={null}>
             <primitive object={nodes.Hips} />
